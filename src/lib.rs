@@ -3,12 +3,12 @@ use pyo3::prelude::*;
 
 use nalgebra::base::*;
 
+use skeletal_structures::mesh_structure::mesh3d::io::*;
 use skeletal_structures::mesh_structure::mesh3d::Mesh3D;
 
 /// Rust struct for PyMesh3D class, representing a 3D mesh.
 #[pyclass]
 struct PyMesh3D {
-    /// Internal Mesh3D object
     mesh: Mesh3D,
 }
 
@@ -66,9 +66,46 @@ impl PyMesh3D {
     }
 }
 
+#[pyfunction]
+fn load_pymesh_obj(filename: &str) -> PyResult<PyMesh3D> {
+    match load_mesh_obj(filename) {
+        Ok(mesh) => Ok(PyMesh3D { mesh }),
+        Err(err) => Err(PyException::new_err(err.to_string())),
+    }
+}
+
+#[pyfunction]
+fn load_pymesh_off(filename: &str) -> PyResult<PyMesh3D> {
+    match load_mesh_off(filename) {
+        Ok(mesh) => Ok(PyMesh3D { mesh }),
+        Err(err) => Err(PyException::new_err(err.to_string())),
+    }
+}
+
+#[pyfunction]
+fn load_pymesh_ply(filename: &str) -> PyResult<PyMesh3D> {
+    match load_mesh_ply(filename) {
+        Ok(mesh) => Ok(PyMesh3D { mesh }),
+        Err(err) => Err(PyException::new_err(err.to_string())),
+    }
+}
+
+#[pyfunction]
+#[pyo3(signature = (filename, pymesh, header=None))]
+fn save_pymesh_ply(filename: &str, pymesh: &PyMesh3D, header: Option<String>) -> PyResult<()> {
+    match save_mesh_ply(filename, &pymesh.mesh, header) {
+        Ok(()) => Ok(()),
+        Err(err) => Err(PyException::new_err(err.to_string())),
+    }
+}
+
 /// Python module calling skeletal_structures
 #[pymodule]
 fn py_skeletal_structures(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<PyMesh3D>()?;
+    m.add_function(wrap_pyfunction!(load_pymesh_obj, m)?)?;
+    m.add_function(wrap_pyfunction!(load_pymesh_off, m)?)?;
+    m.add_function(wrap_pyfunction!(load_pymesh_ply, m)?)?;
+    m.add_function(wrap_pyfunction!(save_pymesh_ply, m)?)?;
     Ok(())
 }
