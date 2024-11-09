@@ -504,7 +504,7 @@ dependencies = [
 [[package]]
 name = "skeletal_structures"
 version = "0.1.0"
-source = "git+https://github.com/Ibujah/skeletal_structures.git#52026a71e3009332e737d0e13c2a7bd2548d4e9d"
+source = "git+https://github.com/Ibujah/skeletal_structures.git#b6d2b01c5cae6863e876b7ea440a235a9ebe3f31"
 dependencies = [
  "anyhow",
  "log",
