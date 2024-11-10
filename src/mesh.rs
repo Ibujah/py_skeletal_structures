@@ -123,8 +123,8 @@ fn save_pymesh_ply(filename: &str, pymesh: &PyMesh3D, header: Option<String>) ->
     }
 }
 
-pub fn add_mesh_module(m: &Bound<'_, PyModule>) -> PyResult<()> {
-    let mesh_module = PyModule::new_bound(m.py(), "mesh_structure")?;
+pub fn add_mesh3d_module(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    let mesh_module = PyModule::new_bound(m.py(), "mesh3d")?;
     mesh_module.add_class::<PyMesh3D>()?;
     mesh_module.add_function(wrap_pyfunction!(load_pymesh_obj, &mesh_module)?)?;
     mesh_module.add_function(wrap_pyfunction!(load_pymesh_off, &mesh_module)?)?;
@@ -135,5 +135,5 @@ pub fn add_mesh_module(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.py()
         .import_bound("sys")?
         .getattr("modules")?
-        .set_item("py_skeletal_structures.mesh_structure", mesh_module)
+        .set_item("py_skeletal_structures.mesh3d", mesh_module)
 }
