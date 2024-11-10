@@ -35,6 +35,18 @@ impl PyMesh3D {
         }
     }
 
+    /// Gets all vertices
+    fn get_all_vertices(&self) -> PyResult<Vec<[f64; 3]>> {
+        let mut vec_vert = Vec::new();
+        for ind_vertex in 0..self.mesh.get_nb_vertices() {
+            match self.mesh.get_vertex(ind_vertex) {
+                Ok(vertex) => vec_vert.push([vertex[0], vertex[1], vertex[2]]),
+                Err(err) => return Err(PyException::new_err(err.to_string())),
+            }
+        }
+        return Ok(vec_vert);
+    }
+
     /// Returns the number of faces in the mesh.
     fn get_nb_faces(&self) -> usize {
         self.mesh.get_nb_faces()
@@ -46,6 +58,18 @@ impl PyMesh3D {
             Ok(face) => Ok([face[0], face[1], face[2]]),
             Err(err) => Err(PyException::new_err(err.to_string())),
         }
+    }
+
+    /// Gets all faces
+    fn get_all_faces(&self) -> PyResult<Vec<[usize; 3]>> {
+        let mut vec_face = Vec::new();
+        for ind_face in 0..self.mesh.get_nb_faces() {
+            match self.mesh.get_face(ind_face) {
+                Ok(face) => vec_face.push([face[0], face[1], face[2]]),
+                Err(err) => return Err(PyException::new_err(err.to_string())),
+            }
+        }
+        return Ok(vec_face);
     }
 
     /// Inserts a new vertex into the mesh and returns its index.
