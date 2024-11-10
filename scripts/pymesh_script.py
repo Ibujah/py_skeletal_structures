@@ -1,10 +1,11 @@
-import py_skeletal_structures
+import os
 
-from py_skeletal_structures import PyMesh3D, load_pymesh_obj, save_pymesh_ply
+import py_skeletal_structures;
+from py_skeletal_structures.mesh_structure import PyMesh3D, load_pymesh_obj, save_pymesh_ply
 
 
 if __name__ == "__main__":
-    mesh = load_pymesh_obj('./resources/cube.obj')
+    mesh = py_skeletal_structures.mesh_structure.load_pymesh_obj('./resources/cube.obj')
 
     print("nb vertices:", mesh.get_nb_vertices())
     for i in range(0, mesh.get_nb_vertices()):
@@ -14,4 +15,6 @@ if __name__ == "__main__":
     for i in range(0, mesh.get_nb_faces()):
         print(i, mesh.get_face(i))
 
-    save_pymesh_ply('./resources/cube.ply', mesh, "c'est un test d'écriture")
+    if not os.path.exists("output"):
+        os.mkdir("output")
+    py_skeletal_structures.mesh_structure.save_pymesh_ply('./output/cube.ply', mesh, "c'est un test d'écriture")
