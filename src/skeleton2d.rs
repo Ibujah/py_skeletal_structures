@@ -105,7 +105,7 @@ impl PySkeleton2D {
     }
 
     /// Inserts a new edge into the skeleton.
-    fn insert_face(&mut self, v1: usize, v2: usize) -> PyResult<()> {
+    fn insert_edge(&mut self, v1: usize, v2: usize) -> PyResult<()> {
         match self.skel.insert_edge(v1, v2) {
             Ok(()) => Ok(()),
             Err(err) => Err(PyException::new_err(err.to_string())),
