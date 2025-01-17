@@ -1,8 +1,7 @@
 import os
 import numpy as np
 
-import py_skeletal_structures;
-from py_skeletal_structures.mesh3d import PyMesh3D, load_pymesh_obj, save_pymesh_ply
+from py_skeletal_structures.mesh3d import load_pymesh_obj, save_pymesh_ply
 
 
 if __name__ == "__main__":
