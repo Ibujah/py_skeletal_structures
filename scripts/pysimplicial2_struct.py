@@ -15,3 +15,9 @@ if __name__ == "__main__":
 
     print(simpl.get_nb_halfedges())
     print(simpl.get_nb_triangles())
+
+    for i in range(0, simpl.get_nb_triangles()):
+        tri = simpl.get_triangle_from_index(i)
+        print(tri.to_string())
+        for he in tri.halfedges():
+            print(he.to_string(), he.opposite().to_string())
